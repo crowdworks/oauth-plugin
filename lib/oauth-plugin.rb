@@ -9,7 +9,9 @@ module OAuth
   module Plugin
     class OAuthRailtie < Rails::Railtie
       initializer "oauth-plugin.configure_rails_initialization" do |app|
-        ActionController::Base.send :include, OAuth::Controllers::ApplicationControllerMethods
+        ActiveSupport.on_load(:action_controller_base) do
+          send :include, OAuth::Controllers::ApplicationControllerMethods
+        end
       end
     end
   end
