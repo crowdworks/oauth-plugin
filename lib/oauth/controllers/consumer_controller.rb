@@ -3,8 +3,8 @@ module Oauth
     module ConsumerController
       def self.included(controller)
         controller.class_eval do
-          before_filter :load_consumer, :except=>:index
-          skip_before_filter :verify_authenticity_token,:only=>:callback
+          before_action :load_consumer, :except=>:index
+          skip_before_action :verify_authenticity_token,:only=>:callback
         end
       end
 
@@ -12,8 +12,8 @@ module Oauth
         @consumer_tokens=ConsumerToken.all :conditions=>{:user_id=>current_user.id}
         # The services the user hasn't already connected to
         @services=OAUTH_CREDENTIALS.keys-@consumer_tokens.collect{|c| c.class.service_name}
-      end      
-      
+      end
+
       # If the user has no token or <tt>force</tt> is set as a param, creates request token and
       # redirects on to oauth provider's auth page.  Otherwise it displays a page with an option
       # to disconnect and redo
@@ -39,11 +39,11 @@ module Oauth
           end
         end
       end
-      
+
       def callback2_querystring
         request.query_string.blank? ? '' : '?' + request.query_string
       end
-      
+
       def callback2
         @token = @consumer.access_token(current_user,params[:code], callback2_oauth_consumer_url)
         if @token
