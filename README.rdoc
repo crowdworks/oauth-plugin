@@ -20,6 +20,8 @@ There are several changes to the latest OAuth 2.0 spec which requires a couple o
 
 https://github.com/pelle/oauth-plugin/blob/master/lib/generators/active_record/oauth_provider_templates/oauth2_token.rb
 
+  require "addressable/uri"
+
   class Oauth2Token < AccessToken
     attr_accessor :state
     def as_json(options={})
@@ -30,9 +32,9 @@ https://github.com/pelle/oauth-plugin/blob/master/lib/generators/active_record/o
 
     def to_query
       q = "access_token=#{token}&token_type=bearer"
-      q << "&state=#{URI.escape(state)}" if @state
+      q << "&state=#{Addressable::URI.encode(state)}" if @state
       q << "&expires_in=#{expires_in}" if expires_at
-      q << "&scope=#{URI.escape(scope)}" if scope
+      q << "&scope=#{Addressable::URI.encode(scope)}" if scope
       q
     end
 
@@ -43,6 +45,8 @@ https://github.com/pelle/oauth-plugin/blob/master/lib/generators/active_record/o
 
 
 https://github.com/pelle/oauth-plugin/blob/master/lib/generators/active_record/oauth_provider_templates/oauth2_verifier.rb
+
+  require "addressable/uri"
 
   class Oauth2Verifier < OauthToken
     validates_presence_of :user
@@ -66,7 +70,7 @@ https://github.com/pelle/oauth-plugin/blob/master/lib/generators/active_record/o
 
     def to_query
       q = "code=#{token}"
-      q << "&state=#{URI.escape(state)}" if @state
+      q << "&state=#{Addressable::URI.encode(state)}" if @state
       q
     end
 

@@ -35,4 +35,5 @@ Gem::Specification.new do |s|
   s.add_dependency("oauth", ["< 0.6.0"])
   s.add_dependency("rack")
   s.add_dependency("oauth2", '>= 0.5.0')
+  s.add_dependency("addressable", '~> 2.8.0')
 end
