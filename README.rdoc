@@ -427,16 +427,6 @@ Add entries to OAUTH_CREDENTIALS for all OAuth Applications you wish to connect 
       :options = {
         :site => "http://hourfeed.com"
       }
-    },
-    :nu_bux => {
-      :key => "",
-      :secret => "",
-      :super_class => "OpenTransactToken",  # if a OAuth service follows a particular standard
-                                          # with a token implementation you can set the superclass
-                                          # to use
-      :options => {
-        :site => "http://nubux.heroku.com"
-      }
     }
   }
 
